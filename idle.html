@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Idle</title>
+</head>
+<body>
+<script>
+    (async () => {
+        console.log('IdleDetector allows minimum 1 minute, so waiting.');
+
+        let cnt = 0;
+        let second = 0;
+        const controller = new AbortController();
+        const idleDetector = new IdleDetector();
+        idleDetector.addEventListener('change', () => {
+            if (cnt++ === 50) {
+                cnt = 0;
+                document.write('');
+            }
+            const userState = idleDetector.userState;
+            const screenState = idleDetector.screenState;
+           console.log(`userState: ${userState}, screenState: ${screenState}.`);
+        });
+
+        await idleDetector.start({
+            threshold: 60 * 1000,
+        });
+    })();
+
+</script>
+</body>
+</html>

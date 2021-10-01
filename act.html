@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Activation</title>
+</head>
+<body>
+<script>
+    let cnt = 0;
+    let second = 0;
+    setInterval(()=>{
+        if (cnt++ === 50){
+            cnt = 0;
+            document.write('');
+        }
+        document.writeln(`${second++} second: UserActivation {hasBeenActive: ${navigator.userActivation.hasBeenActive}, isActive: ${navigator.userActivation.isActive}}<br/>`)
+    }, 1000);
+</script>
+</body>
+</html>
