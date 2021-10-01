@@ -7,6 +7,7 @@
 <body>
 <script>
     (async () => {
+        await IdleDetector.requestPermission();
         console.log('IdleDetector allows minimum 1 minute, so waiting.');
 
         let cnt = 0;
