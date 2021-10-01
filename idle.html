@@ -7,7 +7,10 @@
 <body>
 <script>
     (async () => {
-        await IdleDetector.requestPermission();
+
+        console.log('Before, run in console the following and reload the page:');
+        console.log('await IdleDetector.requestPermission()');
+        console.log('-------------------');
         console.log('IdleDetector allows minimum 1 minute, so waiting.');
 
         let cnt = 0;
