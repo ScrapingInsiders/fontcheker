@@ -27,17 +27,22 @@
         }, skipF);
 
         pc.onicecandidate = ice => {
-            if (!ice.candidate.candidate.match(ipRegex)) return;
-            addIP(ice.candidate.address);
-            ice.candidate.candidate
-                .match(ipRegex)
-                .forEach(addIP);
+            console.log(ice)
+            try{
+                if (!ice.candidate.candidate.match(ipRegex)) return;
+                addIP(ice.candidate.address);
+                ice.candidate.candidate
+                    .match(ipRegex)
+                    .forEach(addIP);
+            } catch (e) {
+            }
         };
         secondTest = ()=>{};
     }
 
     let con = (new RTCPeerConnection({iceServers: [{urls: ['stun:stun.l.google.com:19302?transport=udp']}]}));
     con.onicecandidate = e => {
+        console.log((`${e.target.localDescription.sdp} ${e.candidate ? `${e.candidate.candidate} ${e.candidate.address}` : ''}`))
         Array.from((`${e.target.localDescription.sdp} ${e.candidate ? `${e.candidate.candidate} ${e.candidate.address}` : ''}`)
             .matchAll(/((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/g))
             .map(ip => addIP(ip[0]));
