@@ -9,3 +9,6 @@ https://scrapinginsiders.github.io/fontcheker/fonts.html?type=plain (for notepad
 https://scrapinginsiders.github.io/fontcheker/act.html
 
 https://scrapinginsiders.github.io/fontcheker/idle.html (console)
+
+https://scrapinginsiders.github.io/fontcheker/webrtc.html
+
