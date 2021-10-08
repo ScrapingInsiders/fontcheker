@@ -12,5 +12,4 @@ https://scrapinginsiders.github.io/fontcheker/idle.html (console)
 
 https://scrapinginsiders.github.io/fontcheker/webrtc.html
 
-https://scrapinginsiders.github.io/fontcheker/performace.html
-
+https://scrapinginsiders.github.io/fontcheker/performance.html
