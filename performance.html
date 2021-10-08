@@ -40,10 +40,23 @@
 
 <body>
 <div>
-    <h1>Wait 3 seconds</h1>
+    <h1>Wait 2 seconds</h1>
 </div>
 <script>
     setTimeout(() => {
+
+        document.writeln("<b>1</b><br/><br/>")
+        document.writeln("<table>")
+        performance
+            .getEntries()
+            .map(entry => JSON.stringify(entry, null, '<br/>'))
+            .forEach(json => {
+                document.writeln(`<tr><td>${json}</td></tr>`)
+                document.writeln(`<tr><td></td></tr>`)
+                document.writeln(`<tr><td></td></tr>`)
+            });
+        document.writeln("</table>")
+        document.writeln("<br/><b>2</b><br/><br/>")
         document.writeln("<table>")
         const p = [
             'performance.clearMarks()',
@@ -114,13 +127,13 @@
             'performance.timeOrigin',
         ].map(i => {
             try {
-                document.writeln('<tr><td>',i, '</td><td>', eval(i), '</td></tr>')
+                document.writeln('<tr><td>', i, '</td><td>', eval(i), '</td></tr>')
             } catch (e) {
-                document.writeln('<tr><td>',i, '</td><td>', '<b>ERROR</b>: ', e.message, '</td></tr>')
+                document.writeln('<tr><td>', i, '</td><td>', '<b>ERROR</b>: ', e.message, '</td></tr>')
             }
         });
         document.writeln("</table>")
-    }, 3000)
+    }, 2500)
 </script>
 </body>
 </html>
