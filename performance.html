@@ -112,9 +112,15 @@
             'performance.now()',
             'performance.onresourcetimingbufferfull',
             'performance.timeOrigin',
-        ].map(i => document.writeln('<tr><td>',i, '</td><td>', eval(i), '</td></tr>'));
+        ].map(i => {
+            try {
+                document.writeln('<tr><td>',i, '</td><td>', eval(i), '</td></tr>')
+            } catch (e) {
+                document.writeln('<tr><td>',i, '</td><td>', '<b>ERROR</b>: ', e.message, '</td></tr>')
+            }
+        });
         document.writeln("</table>")
-    }, 1500)
+    }, 5000)
 </script>
 </body>
 </html>
