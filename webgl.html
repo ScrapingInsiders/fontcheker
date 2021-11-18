@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebGL</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+</head>
+<body>
+<script>
+
+    const posnums = [
+        2849,
+        2884,
+        2885,
+        2886,
+        2928,
+        2929,
+        2930,
+        2931,
+        2932,
+        2960,
+        2961,
+        2962,
+        2963,
+        2964,
+        2965,
+        2966,
+        2967,
+        2968,
+        2978,
+        3024,
+        3042,
+        3088,
+        3089,
+        3106,
+        3107,
+        3317,
+        3333,
+        3379,
+        3386,
+        3408,
+        3410,
+        3411,
+        3412,
+        3413,
+        3414,
+        3415,
+        7936,
+        7937,
+        7938,
+        10752,
+        32773,
+        32777,
+        32823,
+        32824,
+        32926,
+        32928,
+        32936,
+        32937,
+        32938,
+        32939,
+        32968,
+        32969,
+        32970,
+        32971,
+        33170,
+        33901,
+        33902,
+        34016,
+        34024,
+        34047,
+        34076,
+        34467,
+        34816,
+        34817,
+        34818,
+        34819,
+        34852,
+        34853,
+        34854,
+        34855,
+        34856,
+        34857,
+        34858,
+        34859,
+        34860,
+        34877,
+        34921,
+        34930,
+        35660,
+        35661,
+        35723,
+        35724,
+        35738,
+        35739,
+        36003,
+        36004,
+        36005,
+        36063,
+        36345,
+        36347,
+        36348,
+        36349,
+        36392,
+        36795,
+        37440,
+        37441,
+        37443,
+        37445,
+        37446,
+        3074,
+        3314,
+        3315,
+        3316,
+        3330,
+        3331,
+        3332,
+        32877,
+        32878,
+        32883,
+        33000,
+        33001,
+        34045,
+        35071,
+        35076,
+        35077,
+        35371,
+        35373,
+        35374,
+        35375,
+        35376,
+        35377,
+        35379,
+        35380,
+        35657,
+        35658,
+        35659,
+        35968,
+        35977,
+        35978,
+        35979,
+        36183,
+        36203,
+        36387,
+        36388,
+        37137,
+        37154,
+        37157,
+        37447,
+        38449
+    ]
+
+    let exts = ['ANGLE_instanced_arrays', 'EXT_blend_minmax', 'EXT_clip_cull_distance', 'EXT_color_buffer_float', 'EXT_color_buffer_half_float', 'EXT_disjoint_timer_query', 'EXT_disjoint_timer_query_webgl2', 'EXT_float_blend', 'EXT_frag_depth', 'EXT_sRGB', 'EXT_shader_framebuffer_fetch', 'EXT_shader_texture_lod', 'EXT_texture_compression_bptc', 'EXT_texture_compression_rgtc', 'EXT_texture_filter_anisotropic', 'EXT_texture_norm16', 'EXT_texture_norm16_dom_source', 'EXT_texture_storage', 'KHR_parallel_shader_compile', 'OES_depth24', 'OES_draw_buffers_indexed', 'OES_element_index_uint', 'OES_fbo_render_mipmap', 'OES_standard_derivatives', 'OES_texture_float', 'OES_texture_float_linear', 'OES_texture_half_float', 'OES_texture_half_float_linear', 'OES_vertex_array_object', 'OVR_multiview2', 'WEBGL_blend_equation_advanced_coherent', 'WEBGL_color_buffer_float', 'WEBGL_compressed_texture_astc', 'WEBGL_compressed_texture_atc', 'WEBGL_compressed_texture_etc', 'WEBGL_compressed_texture_etc1', 'WEBGL_compressed_texture_pvrtc', 'WEBGL_compressed_texture_s3tc', 'WEBGL_compressed_texture_s3tc_srgb', 'WEBGL_debug', 'WEBGL_debug_renderer_info', 'WEBGL_debug_shader_precision', 'WEBGL_debug_shaders', 'WEBGL_depth_texture', 'WEBGL_draw_buffers', 'WEBGL_draw_elements_no_range_check', 'WEBGL_draw_instanced_base_vertex_base_instance', 'WEBGL_dynamic_texture', 'WEBGL_get_buffer_sub_data_async', 'WEBGL_lose_context', 'WEBGL_multi_draw', 'WEBGL_multi_draw_instanced_base_vertex_base_instance', 'WEBGL_security_sensitive_resources', 'WEBGL_shared_resources', 'WEBGL_subarray_uploads', 'WEBGL_subscribe_uniform', 'WEBGL_texture_from_depth_video', 'WEBGL_texture_multisample', 'WEBGL_texture_source_iframe', 'WEBGL_video_texture', 'WEBGL_webcodecs_video_frame']
+    const comb = [
+        "0000000000", "0000000100", "0000002000", "0000002100", "0000010000", "0000010100", "0000012000", "0000012100",
+    ]
+    let arrFinal = []
+    let arrSeen = [];
+    let found = []
+    let max = 0
+    let nums = []
+    let arrfp = []
+    for (const cb of comb.slice(0, 500)) {
+        let comin = cb.split("")
+        for (const x of ["webgl", "webgl2", "experimental-webgl"]) {
+            let arr = []
+
+            const canvas = document.createElement("canvas");
+            let obj = {}
+            if (comin[0] === "1")
+                obj.alpha = false;
+            if (comin[0] === "2")
+                obj.alpha = true;
+
+            if (comin[1] === "0")
+                obj.powerPreference = "default";
+            if (comin[1] === "1")
+                obj.powerPreference = "low-power";
+            if (comin[1] === "2")
+                obj.powerPreference = "high-performance";
+
+            if (comin[2] === "1")
+                obj.premultipliedAlpha = false;
+            if (comin[2] === "1")
+                obj.premultipliedAlpha = true;
+
+            if (comin[3] === "1")
+                obj.preserveDrawingBuffer = false;
+            if (comin[3] === "2")
+                obj.preserveDrawingBuffer = true;
+
+            if (comin[4] === "1")
+                obj.xrCompatible = false;
+            if (comin[4] === "2")
+                obj.xrCompatible = true;
+
+            if (comin[5] === "1")
+                obj.depth = false;
+            if (comin[5] === "2")
+                obj.depth = true;
+
+            if (comin[6] === "1")
+                obj.stencil = false;
+            if (comin[6] === "2")
+                obj.stencil = true;
+
+            if (comin[7] === "1")
+                obj.antialias = false;
+            if (comin[7] === "2")
+                obj.antialias = true;
+
+            if (comin[8] === "1")
+                obj.desynchronized = false;
+            if (comin[8] === "2")
+                obj.desynchronized = true;
+
+            if (comin[9] === "1")
+                obj.failIfMajorPerformanceCaveat = false;
+            if (comin[9] === "2")
+                obj.failIfMajorPerformanceCaveat = true;
+
+            const gl = canvas.getContext(x, obj);
+            if (gl === null)
+                continue
+            exts.map(i => gl.getExtension(i))
+            for (const number of posnums) {
+
+                const prm = gl.getParameter(number);
+                // console.log(number, prm)
+                if (prm !== null) {
+                    if (number > max)
+                        max = number
+                    nums.push(number)
+                    arr.push(prm)
+                    if (![37445, 37446].includes(number))
+                        arrfp.push(prm + " " + number)
+                }
+            }
+            let cache = arr.join("=")
+            if (!arrSeen.includes(cache)) {
+                //found.push([x + " " + cb])
+                arrSeen.push(cache)
+                arrFinal.push("==> " + cb + " " + x)
+                arrFinal.push(...arr)
+            }
+            
+        }
+    }
+
+    arrFinal.unshift("count: " + arrFinal.length)
+    arrFinal.unshift("Your ID: <b>" + CryptoJS.MD5(arrfp.join("\n")).toString() + "</b>")
+    arrFinal = [...found, ...arrFinal]
+    document.write(arrFinal.join("<br/>"))
+    window.found = arrFinal;
+
+</script>
+</body>
+</html>
