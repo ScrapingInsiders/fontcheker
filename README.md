@@ -15,3 +15,5 @@ https://scrapinginsiders.github.io/fontcheker/webrtc.html
 https://scrapinginsiders.github.io/fontcheker/performance.html
 
 https://scrapinginsiders.github.io/fontcheker/media.html
+
+https://scrapinginsiders.github.io/fontcheker/webgl.html
