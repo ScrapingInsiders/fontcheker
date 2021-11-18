@@ -221,6 +221,7 @@
                 obj.failIfMajorPerformanceCaveat = true;
 
             const gl = canvas.getContext(x, obj);
+
             if (gl === null)
                 continue
             exts.map(i => gl.getExtension(i))
@@ -232,7 +233,7 @@
                     if (number > max)
                         max = number
                     nums.push(number)
-                    arr.push(prm)
+                    arr.push(`gl.getParameter(${number})` + " --- " + prm)
                     if (![37445, 37446].includes(number))
                         arrfp.push(prm + " " + number)
                 }
@@ -242,9 +243,10 @@
                 //found.push([x + " " + cb])
                 arrSeen.push(cache)
                 arrFinal.push("==> " + cb + " " + x)
+                arrFinal.push(`const gl = canvas.getContext("${x}", ${JSON.stringify(obj)})`)
                 arrFinal.push(...arr)
             }
-            
+
         }
     }
 
